@@ -1,7 +1,9 @@
-import { Controller, Post, Get, Put, Delete, Body, Req, Res, Param, Logger } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, Req, Res, Param, Logger, UseGuards } from '@nestjs/common';
 import { BookDto } from './book.dto';
 import { BookService } from './book.service';
+import { AuthGuard } from '@nestjs/passport';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('book')
 export class BookController {
   private readonly logger = new Logger(BookController.name);

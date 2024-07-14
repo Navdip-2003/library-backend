@@ -35,6 +35,7 @@ export class UserService {
                 gender: userProfile.gender,
                 role: userProfile.role,
                 roleId : userProfile.roleId,
+            address : userProfile.address,
                 verifyToken: tokenForEmail,
                 verifyTokenExpiry: new Date(Date.now() + 2000 * 86400),
             });

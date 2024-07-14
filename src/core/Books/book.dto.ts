@@ -7,27 +7,27 @@ export class BookDto {
 
   @IsString()
   @IsNotEmpty()
-  title: string;
+  title?: string;
 
   @IsString()
   @IsNotEmpty()
-  author: string;
+  author?: string;
 
   @IsString()
   @IsNotEmpty()
-  publisher: string;
+  publisher?: string;
 
   @IsNumber()
   @IsNotEmpty()
-  year: number;
+  year?: number;
 
   @IsString()
   @IsNotEmpty()
-  genre: string;
+  genre?: string;
 
   @IsNumber()
   @IsNotEmpty()
-  quantity: number;
+  quantity?: number;
 
   @IsBoolean()
   @IsOptional()

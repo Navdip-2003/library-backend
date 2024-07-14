@@ -7,6 +7,7 @@ export class CreateUserDto extends UserAuthDto{
     gender?: genderEnum; 
     role? : string;
     roleId? : string;
+    address?: string;
     verifyToken?: string;
     verifyTokenExpiry?: Date;
 }

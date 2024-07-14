@@ -14,7 +14,7 @@ export class UserController {
     async registerUser(@Res() res, @Body() userProfile : CreateUserDto) {
         console.log('Received add user request for user!');
         const result =  await this.userService.registerUser(userProfile);
-        return res.status(result.status).send(result);
+        return res.status(result).send(result);
     }
 
     @Post('login')
