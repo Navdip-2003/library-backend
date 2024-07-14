@@ -15,7 +15,15 @@ export class BookDto {
 
   @IsString()
   @IsNotEmpty()
+<<<<<<< Updated upstream
   publisher?: string;
+=======
+  image: string;
+
+  @IsString()
+  @IsNotEmpty()
+  publisher: string;
+>>>>>>> Stashed changes
 
   @IsNumber()
   @IsNotEmpty()
@@ -44,7 +52,7 @@ export class BookDto {
   updated_at?: Date;
 
   @IsString()
-  @IsIn(['trending', 'arriving'])
+  @IsIn(['trending', 'arriving' , 'book'])
   status: string;
 
   @IsOptional()

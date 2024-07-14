@@ -41,9 +41,11 @@ export class BookController {
     return res.status(result.status).send(result);
   }
 
-  @Get('arriving/days-left')
-  async getArrivingBooksWithDaysLeft(@Res() res) {
-    const result = await this.bookService.getArrivingBooksWithDaysLeft();
-    return res.status(result.status).send(result);
+  
+
+  @Get('all')
+  async getAllBookDetails(@Res() res) {
+      const result = await this.bookService.getAllBookDetails();
+      return res.status(result.status).send(result);
   }
 }

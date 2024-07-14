@@ -85,27 +85,43 @@ export class BookService {
   async getBooksByStatus(status: string) {
     try {
       const db = fb.getFirestore();
-      const querySnapshot = await db.collection('books').where('status', '==', status).get();
+      const querySnapshot = await db.collection('books').where('status', "==", status).get();
+      console.log(querySnapshot.docs.length)
+      console.log(status)
       const books = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-
       return { success: true, status: HttpStatus.OK, data: books };
     } catch (error) {
       this.handleException(error);
     }
   }
 
-  async getArrivingBooksWithDaysLeft() {
+  async getAllBookDetails() {
     try {
       const db = fb.getFirestore();
-      const querySnapshot = await db.collection('books').where('status', '==', 'arriving').get();
-      const books = querySnapshot.docs.map(doc => {
-        const bookData = doc.data();
-        const arrivalDate = bookData.arrivalDate ? bookData.arrivalDate.toDate() : null;
-        const daysLeft = arrivalDate ? Math.ceil((arrivalDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : null;
-        return { id: doc.id, ...bookData, daysLeft };
-      });
-
+      const querySnapshot = await db.collection('books').get();
+      const books = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
       return { success: true, status: HttpStatus.OK, data: books };
+    } catch (error) {
+      this.handleException(error);
+    }
+  }
+
+  async getArrivingBookDetails(id: string) {
+    try {
+      const db = fb.getFirestore();
+      const bookRef = await db.collection('books').doc(id).get();
+
+      if (!bookRef.exists) {
+        throw new NotFoundException('Book not found');
+      }
+
+      const bookData = bookRef.data();
+      
+      const arrivalDate = bookData.arrivalDate ? bookData.arrivalDate.toDate() : null;
+      
+      const daysLeft = arrivalDate ? Math.ceil((arrivalDate.getTime() - new Date().getTime()) / (1000 * 60 * 60 * 24)) : null;
+
+      return { success: true, status: HttpStatus.OK, data: { id, arrivalDate, daysLeft } };
     } catch (error) {
       this.handleException(error);
     }
