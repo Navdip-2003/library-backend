@@ -1,5 +1,6 @@
 import { Injectable, Logger, BadRequestException, InternalServerErrorException, HttpStatus, NotFoundException } from '@nestjs/common';
 import { BookDto } from './book.dto';
+import fb from '../../firesbase/firebase.config';
 
 
 @Injectable()
@@ -9,7 +10,7 @@ export class BookService {
   constructor() {}
 
   private async isIsbnExist(isbn: string): Promise<boolean> {
-    const db = fb.firestore();
+    const db = fb.getFirestore();
     const querySnapshot = await db.collection('books').where('isbn', '==', isbn).get();
     return !querySnapshot.empty;
   }
@@ -21,7 +22,7 @@ export class BookService {
       if (isDuplicateBook) {
         throw new BadRequestException('Duplicate book ISBN');
       } else {
-        const db = fb.firestore();
+        const db = fb.getFirestore();
         bookDto.created_at = new Date();
         const bookRef = await db.collection('books').add(JSON.parse(JSON.stringify(bookDto)));
         return { success: true, status: HttpStatus.OK, data: { id: bookRef.id } };
@@ -33,7 +34,7 @@ export class BookService {
 
   async getBookById(id: string) {
     try {
-      const db = fb.firestore();
+      const db = fb.getFirestore();
       const bookRef = await db.collection('books').doc(id).get();
 
       if (!bookRef.exists) {
@@ -48,7 +49,7 @@ export class BookService {
 
   async updateBook(id: string, bookDto: Partial<BookDto>) {
     try {
-      const db = fb.firestore();
+      const db = fb.getFirestore();
       const bookRef = db.collection('books').doc(id);
       const bookSnapshot = await bookRef.get();
 
@@ -66,7 +67,7 @@ export class BookService {
 
   async deleteBook(id: string) {
     try {
-      const db = fb.firestore();
+      const db = fb.getFirestore();
       const bookRef = db.collection('books').doc(id);
       const bookSnapshot = await bookRef.get();
 
@@ -83,7 +84,7 @@ export class BookService {
 
   async getBooksByStatus(status: string) {
     try {
-      const db = fb.firestore();
+      const db = fb.getFirestore();
       const querySnapshot = await db.collection('books').where('status', '==', status).get();
       const books = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
 
@@ -95,7 +96,7 @@ export class BookService {
 
   async getArrivingBooksWithDaysLeft() {
     try {
-      const db = fb.firestore();
+      const db = fb.getFirestore();
       const querySnapshot = await db.collection('books').where('status', '==', 'arriving').get();
       const books = querySnapshot.docs.map(doc => {
         const bookData = doc.data();
