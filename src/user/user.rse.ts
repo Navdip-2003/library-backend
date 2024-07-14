@@ -6,12 +6,9 @@ export class UserSummaryRes {
     email: string;
     mobileNumber:string;
     age: number;
-    gender: genderEnum; 
-    weight: number;
-    height: number;
-    dieataryPrefrencees: string;
-    allergies: string;
-    healthGoals: string;
+    gender: genderEnum;
+    role?: string; 
+    roleId? : string;
     verifyToken?: string;
     verifyTokenExpiry?: Date;
 }

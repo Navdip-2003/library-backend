@@ -1,5 +1,5 @@
 import { BadRequestException, ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
-import fb from '../../src/firesbase/firebase.config';
+import fb from '../firesbase/firebase.config';
 import { CreateUserDto } from "./user.dto";
 import * as jwt from 'jsonwebtoken';
 import { UserAuthDto } from "./user.auth";
@@ -33,11 +33,8 @@ export class UserService {
                 mobileNumber: userProfile.mobileNumber,
                 age: userProfile.age,
                 gender: userProfile.gender,
-                weight: userProfile.weight,
-                height: userProfile.height,
-                dieataryPrefrencees: userProfile.dieataryPrefrencees,
-                allergies: userProfile.allergies,
-                healthGoals: userProfile.healthGoals,
+                role: userProfile.role,
+                roleId : userProfile.roleId,
                 verifyToken: tokenForEmail,
                 verifyTokenExpiry: new Date(Date.now() + 2000 * 86400),
             });
@@ -322,11 +319,8 @@ export class UserService {
             mobileNumber: data.mobileNumber,
             age: data.age,
             gender: data.gender,
-            weight: data.weight,
-            height: data.height,
-            dieataryPrefrencees: data.dieataryPrefrencees,
-            allergies: data.allergies,
-            healthGoals: data.healthGoals,
+            role: data.role,
+            roleId: data.roleId
         };
         return userRes;
        }
