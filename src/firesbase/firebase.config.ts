@@ -4,8 +4,7 @@ import * as serviceAccount from './firebase-admin-sdk.json';
 const setupFirebase = () => {
   admin.initializeApp({
     credential: admin.credential.cert(serviceAccount as admin.ServiceAccount),
-    databaseURL:"",
-    storageBucket: 'gs://library-data-793c2.appspot.com'
+    storageBucket: 'gs://library-managment-5cd62.appspot.com'
   });
   
 }
