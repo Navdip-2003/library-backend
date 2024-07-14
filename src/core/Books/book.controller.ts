@@ -17,6 +17,12 @@ export class BookController {
     return res.status(result.status).send(result);
   }
 
+  @Get('all')
+  async getAllBookDetails(@Res() res) {
+      const result = await this.bookService.getAllBookDetails();
+      return res.status(result.status).send(result);
+  }
+
   @Get(':id')
   async getBookById(@Res() res, @Param('id') id: string) {
     const result = await this.bookService.getBookById(id);
@@ -39,13 +45,5 @@ export class BookController {
   async getBooksByStatus(@Res() res, @Param('status') status: string) {
     const result = await this.bookService.getBooksByStatus(status);
     return res.status(result.status).send(result);
-  }
-
-  
-
-  @Get('all')
-  async getAllBookDetails(@Res() res) {
-      const result = await this.bookService.getAllBookDetails();
-      return res.status(result.status).send(result);
-  }
+  } 
 }

@@ -1,7 +1,7 @@
+import * as jwt from 'jsonwebtoken';
 import { BadRequestException, ConflictException, HttpStatus, Injectable, InternalServerErrorException, NotFoundException } from "@nestjs/common";
 import fb from '../firesbase/firebase.config';
 import { CreateUserDto } from "./user.dto";
-import * as jwt from 'jsonwebtoken';
 import { UserAuthDto } from "./user.auth";
 import { db_collections, JWT_SECRET, message, pageSize } from "src/common/constrats";
 import { comparePassword, hashPassword, hashToken } from "src/common/utills";
@@ -24,7 +24,6 @@ export class UserService {
         });
 
         const tokenForEmail = hashToken(Math.floor(1000 + Math.random() * 9000).toString());
-        console.log(tokenForEmail);
 
         const userDeatiles = await
             this.addUserProfile({
@@ -42,7 +41,7 @@ export class UserService {
 
         delete userProfile.mobileNumber;
         const token = this.generateJWT(userProfile);
-        return { "success" : true, "status": HttpStatus.OK, "data": {"token" : token }};
+        return { "success" : true, "status": HttpStatus.OK, "data": { "token" : token }};
     }
     
     async loginUser(loginDto: UserAuthDto) {

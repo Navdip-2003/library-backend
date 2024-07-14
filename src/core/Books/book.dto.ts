@@ -15,15 +15,7 @@ export class BookDto {
 
   @IsString()
   @IsNotEmpty()
-<<<<<<< Updated upstream
   publisher?: string;
-=======
-  image: string;
-
-  @IsString()
-  @IsNotEmpty()
-  publisher: string;
->>>>>>> Stashed changes
 
   @IsNumber()
   @IsNotEmpty()
